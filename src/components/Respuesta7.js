@@ -1,77 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Container, Row, Col, Button } from 'react-bootstrap';
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const Respuesta7 = () => {
-    const [formData, setFormData] = useState({
-        id: '',
-        name: '',
-        email: ''
-    });
-    const [storedData, setStoredData] = useState([]);
-    const [editMode, setEditMode] = useState(false);
 
-    // Cargar los datos desde localStorage cuando el componente se monta
-    useEffect(() => {
-        const stored = localStorage.getItem('usersData');
-        if (stored) {
-            setStoredData(JSON.parse(stored));
-        }
-    }, []);
-
-    // Generar un ID único basado en el timestamp y la longitud de los usuarios guardados
-    const generateId = () => {
-        return Date.now().toString() + storedData.length;
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (editMode) {
-            // Modo de edición: Actualizar usuario existente
-            const updatedData = storedData.map(user =>
-                user.id === formData.id ? formData : user
-            );
-            setStoredData(updatedData);
-            localStorage.setItem('usersData', JSON.stringify(updatedData));
-        } else {
-            // Modo de creación: Agregar un nuevo usuario
-            const newUser = { ...formData, id: generateId() };
-            const updatedData = [...storedData, newUser];
-            setStoredData(updatedData);
-            localStorage.setItem('usersData', JSON.stringify(updatedData));
-        }
-
-        // Limpiar el formulario y salir del modo de edición
-        setFormData({ id: '', name: '', email: '' });
-        setEditMode(false);
-    };
-
-    const handleEdit = (id) => {
-        const userToEdit = storedData.find(user => user.id === id);
-        setFormData(userToEdit);
-        setEditMode(true);
-    };
-
-    const handleDelete = (id) => {
-        const updatedData = storedData.filter(user => user.id !== id);
-        setStoredData(updatedData);
-        localStorage.setItem('usersData', JSON.stringify(updatedData));
-    };
-
-    const handleShowStoredData = () => {
-        const stored = localStorage.getItem('usersData');
-        if (stored) {
-            setStoredData(JSON.parse(stored));
-        }
-    };
 
     return (
         <Container>
@@ -118,54 +49,6 @@ const Respuesta7 = () => {
                             </li>
                         </ul>
                     </div>
-                    <h2>Formulario con almacenamiento en LocalStorage</h2>
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="formName">
-                            <Form.Label>Nombre</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="Introduce tu nombre"
-                            />
-                        </Form.Group>
-
-                        <Form.Group controlId="formEmail" className="mt-3">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="Introduce tu email"
-                            />
-                        </Form.Group>
-
-                        <Button className="mt-3" type="submit">
-                            {editMode ? 'Actualizar Usuario' : 'Guardar Usuario'}
-                        </Button>
-                    </Form>
-
-                    <Button className="mt-3" onClick={handleShowStoredData}>
-                        Mostrar Usuarios Guardados
-                    </Button>
-
-                    {storedData.length > 0 && (
-                        <div className="mt-3">
-                            <h4>Usuarios Guardados en LocalStorage:</h4>
-                            {storedData.map(user => (
-                                <div key={user.id}>
-                                    <p>ID: {user.id}</p>
-                                    <p>Nombre: {user.name}</p>
-                                    <p>Email: {user.email}</p>
-                                    <Button variant="warning" onClick={() => handleEdit(user.id)}>Editar</Button>
-                                    <Button variant="danger" onClick={() => handleDelete(user.id)}>Eliminar</Button>
-                                    <hr />
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </Col>
             </Row>
         </Container>
