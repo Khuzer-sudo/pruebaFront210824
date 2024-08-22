@@ -27,21 +27,21 @@ const Respuesta7 = () => {
                                 </ul>
                             </li>
                             <li>
-                                <strong>Guardar los datos en `localStorage`</strong>
+                                <strong>3. Guardar los datos en `localStorage`</strong>
                                 <ul>
                                     <li>Dentro de la función `handleChange`, después de actualizar el estado, utilizaria `localStorage.setItem` para almacenar los datos en `localStorage`.</li>
                                     <li>Despues, conviertiria los datos del formulario a una cadena JSON antes de guardarlos en `localStorage` y sea mas facil guardar los datos.</li>
                                 </ul>
                             </li>
                             <li>
-                                <strong>Recuperar los datos de `localStorage`</strong>
+                                <strong>4. Recuperar los datos de `localStorage`</strong>
                                 <ul>
                                     <li>Cuando el componente se monta, utiliza `localStorage.getItem` para recuperar los datos guardados anteriormente.</li>
                                     <li>Si existen datos guardados, actualiza el estado del componente para mostrarlos en el formulario.</li>
                                 </ul>
                             </li>
                             <li>
-                                <strong>Renderizar los datos guardados</strong>
+                                <strong>5. Renderizar los datos guardados</strong>
                                 <ul>
                                     <li>Agregaria un botón y una función que permita al usuario ver los datos guardados en `localStorage`.</li>
                                     <li>Utilizaria un mapa para iterar sobre los datos guardados y mostrarlos</li>
